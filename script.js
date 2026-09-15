@@ -415,7 +415,7 @@ canvas.addEventListener("pointerdown", function (event) {
 
             pendingArrowPointerId = null;
 
-        }, 150);
+        }, 100);
 
         draw();
 
