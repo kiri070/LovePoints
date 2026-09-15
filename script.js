@@ -1165,6 +1165,36 @@ function drawArrow(arrow, selected) {
     ctx.fill();
 
 
+    // ========================
+    // 選択ハンドル
+    // ========================
+
+    if (selected) {
+
+        ctx.strokeStyle = "#4ddfff";
+        ctx.fillStyle = "white";
+        ctx.lineWidth = 4;
+        ctx.setLineDash([10, 7]);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            arrow.startX,
+            arrow.startY
+        );
+
+        ctx.lineTo(
+            arrow.endX,
+            arrow.endY
+        );
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+
+    }
+
+
     ctx.restore();
 
 }
