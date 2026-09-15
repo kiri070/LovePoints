@@ -1,5 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const canvasArea = document.getElementById("canvasArea");
 
 const imageInput = document.getElementById("imageInput");
 
@@ -73,6 +74,8 @@ imageInput.addEventListener("change", function () {
 
             canvas.width = image.width;
             canvas.height = image.height;
+
+            updateCanvasDisplaySize();
 
             texts = [];
             arrows = [];
@@ -188,6 +191,57 @@ function addText(textValue) {
 // ============================
 // Canvas座標
 // ============================
+
+function updateCanvasDisplaySize() {
+
+    if (!canvas.width || !canvas.height) {
+        return;
+    }
+
+    const isMobile =
+        window.matchMedia("(max-width: 600px)").matches;
+
+    const minDisplayWidth =
+        isMobile ? 320 : 420;
+
+    const minDisplayHeight =
+        isMobile ? 220 : 300;
+
+    const areaWidth =
+        canvasArea.clientWidth || window.innerWidth;
+
+    const maxDisplayWidth =
+        Math.max(1, areaWidth);
+
+    const maxDisplayHeight =
+        Math.max(
+            isMobile ? 260 : 320,
+            window.innerHeight - 250
+        );
+
+    const minScale =
+        Math.max(
+            1,
+            minDisplayWidth / canvas.width,
+            minDisplayHeight / canvas.height
+        );
+
+    const maxScale =
+        Math.min(
+            maxDisplayWidth / canvas.width,
+            maxDisplayHeight / canvas.height
+        );
+
+    const displayScale =
+        Math.min(minScale, maxScale);
+
+    canvas.style.width =
+        `${Math.round(canvas.width * displayScale)}px`;
+
+    canvas.style.height =
+        `${Math.round(canvas.height * displayScale)}px`;
+
+}
 
 function getCanvasPosition(event) {
 
@@ -1221,7 +1275,11 @@ saveButton.addEventListener("pointerup", function () {
 canvas.width = 800;
 canvas.height = 500;
 
+updateCanvasDisplaySize();
+
 draw();
+
+window.addEventListener("resize", updateCanvasDisplaySize);
 
 
 //更新履歴
