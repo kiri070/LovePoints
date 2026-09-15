@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=0.1"
+    >
+
+    <title>画像を保存</title>
+
+    <link
+        rel="stylesheet"
+        href="download.css"
+    >
+
+</head>
+
+<body>
+    <img
+        id="resultImage"
+        alt="作成した画像"
+    >
+
+
+    <script>
+
+        const resultImage =
+            document.getElementById("resultImage");
+
+        const downloadLink =
+            document.getElementById("downloadLink");
+
+        const backButton =
+            document.getElementById("backButton");
+
+
+        // sessionStorageから画像を取得
+        const imageData =
+            sessionStorage.getItem("oshiKokoMiteImage");
+
+
+        if (imageData) {
+
+            resultImage.src = imageData;
+
+            downloadLink.href = imageData;
+
+        }
+        else {
+
+            resultImage.alt =
+                "画像がありません";
+
+            downloadLink.style.display =
+                "none";
+
+        }
+
+
+        backButton.addEventListener(
+            "click",
+            function () {
+
+                history.back();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

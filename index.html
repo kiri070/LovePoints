@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>推しポイント</title>
+
+    <link rel="stylesheet" href="style.css?v=0.01">
+</head>
+
+<body>
+    
+    <div id="topArea">
+        <h1>推しポイント</h1>
+
+        <button id="UpdateHistory_button">更新履歴</button>
+    </div>
+
+    <div class="toolbar">
+
+        <button id="addText" class="button">ここ好き！</button>
+
+        <button id="addCustomText" class="button">テキスト追加</button>
+
+        <label>
+            文字サイズ
+            <input
+                type="range"
+                id="textSizeSlider"
+                min="15"
+                max="100"
+                value="40"
+            >
+        </label>
+
+        <label>
+            文字色
+            <input type="color" id="textColor" value="#ffffff">
+        </label>
+        
+
+        <label>
+            矢印サイズ
+            <input
+                type="range"
+                id="arrowSizeSlider"
+                min="2"
+                max="30"
+                value="8"
+            >
+        </label>
+
+        <label>
+            矢印色
+            <input type="color" id="arrowColor" value="#ff0000">
+        </label>
+
+        <div>
+            <button id="rotateLeft" class="button">↶ 15°</button>
+            <button id="rotateRight" class="button">↷ 15°</button>
+
+            <button id="deleteButton" class="button">選択を削除</button>
+
+            <button id="clearButton" class="button">全部削除</button>
+
+            
+        </div>
+
+        <div id="mainFunction">
+            <label class="imageButton">
+                画像を選択
+                <input type="file" id="imageInput" accept="image/*">
+            </label>
+
+            <button id="saveButton" class="button">画像を保存</button>
+        </div>
+        
+
+        <div id="overlay"></div>
+        <div id="inputUI">
+            <h3>テキストを追加</h3>
+            <input type="text" id="userText_area" placeholder="テキストを入力...">
+
+            <div>
+                <button class="button" id="addText_button">追加</button>
+                <button class="button" id="cansel_dialog">戻る</button>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <p class="hint">
+        文字・矢印：タップ / ドラッグで移動<br>
+        矢印：長押し / ドラッグして描画<br>
+        矢印を選択して ↶ ↷ で回転<br>
+    </p>
+
+    <div id="canvasArea">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script src="script.js?v=0.01"></script>
+    
+
+</body>
+
+</html>
