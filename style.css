@@ -280,11 +280,11 @@ button:hover,
 
     h1 {
         margin: 8px 0 22px;
-        font-size: 34px;
+        font-size: 20px;
         line-height: 1.1;
     }
 
-    #topArea {
+    /* #topArea {
         gap: 16px;
         align-items: flex-start;
     }
@@ -293,6 +293,20 @@ button:hover,
         flex-wrap: wrap;
         justify-content: flex-end;
         gap: 8px;
+    } */
+
+    #topArea {
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    #topArea h1 {
+        flex: 1;
+        min-width: 0;
+    }
+
+    #topButtons {
+        flex-shrink: 1;
     }
 
     #languageToggle,
