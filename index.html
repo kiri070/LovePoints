@@ -13,28 +13,35 @@
 <body>
     
     <div id="topArea">
-        <h1>推しポイント</h1>
+        <h1 data-i18n="appTitle">推しポイント</h1>
 
-        <button id="UpdateHistory_button">更新履歴</button>
+        <div id="topButtons">
+            <button id="languageToggle" aria-label="言語を切り替え">
+                <span data-lang-label="ja">日本語</span>
+                <span class="languageDivider">/</span>
+                <span data-lang-label="en">English</span>
+            </button>
+            <button id="UpdateHistory_button" data-i18n="updateHistory">更新履歴</button>
+        </div>
     </div>
 
     <div id="mainFunction">
-            <label class="imageButton">
+            <label class="imageButton" data-i18n="chooseImage">
                 画像を選択
                 <input type="file" id="imageInput" accept="image/*">
             </label>
 
-            <button id="saveButton" class="button">画像を保存</button>
+            <button id="saveButton" class="button" data-i18n="saveImage">画像を保存</button>
     </div>
 
     <div class="toolbar">
 
-        <button id="addText" class="button">ここ好き！</button>
+        <button id="addText" class="button" data-i18n="quickText">ここ好き！</button>
 
-        <button id="addCustomText" class="button">テキスト追加</button>
+        <button id="addCustomText" class="button" data-i18n="addCustomText">テキスト追加</button>
 
         <label>
-            文字サイズ
+            <span data-i18n="textSize">文字サイズ</span>
             <input
                 type="range"
                 id="textSizeSlider"
@@ -45,13 +52,13 @@
         </label>
 
         <label>
-            文字色
+            <span data-i18n="textColor">文字色</span>
             <input type="color" id="textColor" value="#ffffff">
         </label>
         
 
         <label>
-            矢印サイズ
+            <span data-i18n="arrowSize">矢印サイズ</span>
             <input
                 type="range"
                 id="arrowSizeSlider"
@@ -62,7 +69,7 @@
         </label>
 
         <label>
-            矢印色
+            <span data-i18n="arrowColor">矢印色</span>
             <input type="color" id="arrowColor" value="#ff0000">
         </label>
 
@@ -70,9 +77,9 @@
             <button id="rotateLeft" class="button">↶ 15°</button>
             <button id="rotateRight" class="button">↷ 15°</button>
 
-            <button id="deleteButton" class="button">選択を削除</button>
+            <button id="deleteButton" class="button" data-i18n="deleteSelection">選択を削除</button>
 
-            <button id="clearButton" class="button">全部削除</button>
+            <button id="clearButton" class="button" data-i18n="clearAll">全部削除</button>
 
             
         </div>
@@ -89,19 +96,19 @@
 
         <div id="overlay"></div>
         <div id="inputUI">
-            <h3>テキストを追加</h3>
-            <input type="text" id="userText_area" placeholder="テキストを入力...">
+            <h3 data-i18n="addTextTitle">テキストを追加</h3>
+            <input type="text" id="userText_area" placeholder="テキストを入力..." data-i18n-placeholder="textPlaceholder">
 
             <div>
-                <button class="button" id="addText_button">追加</button>
-                <button class="button" id="cansel_dialog">戻る</button>
+                <button class="button" id="addText_button" data-i18n="add">追加</button>
+                <button class="button" id="cansel_dialog" data-i18n="back">戻る</button>
             </div>
             
         </div>
 
     </div>
 
-    <p class="hint">
+    <p class="hint" data-i18n-html="hint">
         文字・矢印 移動：タップ / ドラッグ<br>
         矢印描画：少し長押しして ドラッグ<br>
         矢印回転：選択して ↶ ↷ で回転<br>

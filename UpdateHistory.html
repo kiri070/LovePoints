@@ -8,16 +8,56 @@
     <link rel="stylesheet" href="UpdateHistory.css?v=0.01">
 </head>
 <body>
-    <h1>更新履歴</h1>
+    <h1 data-i18n="title">更新履歴</h1>
     <div id="update">
 
         <div>
             <h2>2026/9/16</h2>
             <hr>
-            <p>・リリース<br>
+            <p data-i18n-html="release">・リリース<br>
             </p>
         </div>
         
     </div>
+    <script>
+        const translations = {
+            ja: {
+                documentTitle: "更新履歴",
+                title: "更新履歴",
+                release: "・リリース<br>"
+            },
+            en: {
+                documentTitle: "Update History",
+                title: "Update History",
+                release: "- Released<br>"
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const selectedLanguage =
+            params.get("lang") === "en" ||
+            localStorage.getItem("lovePointsLanguage") === "en"
+                ? "en"
+                : "ja";
+
+        const translation =
+            translations[selectedLanguage];
+
+        document.documentElement.lang =
+            selectedLanguage;
+
+        document.title =
+            translation.documentTitle;
+
+        document.querySelectorAll("[data-i18n]").forEach(function (element) {
+            element.textContent =
+                translation[element.dataset.i18n];
+        });
+
+        document.querySelectorAll("[data-i18n-html]").forEach(function (element) {
+            element.innerHTML =
+                translation[element.dataset.i18nHtml];
+        });
+    </script>
 </body>
 </html>

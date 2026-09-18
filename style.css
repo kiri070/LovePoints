@@ -241,6 +241,30 @@ button:hover,
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+}
+
+#topButtons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+#languageToggle {
+    font-size: 15px;
+}
+
+#languageToggle[data-language="ja"] [data-lang-label="ja"],
+#languageToggle[data-language="en"] [data-lang-label="en"] {
+    color: #4ddfff;
+    font-weight: bold;
+}
+
+#languageToggle[data-language="ja"] [data-lang-label="en"],
+#languageToggle[data-language="en"] [data-lang-label="ja"],
+.languageDivider {
+    color: #aaa;
 }
 #UpdateHistory_button {
     font-size: 15px;
@@ -262,11 +286,19 @@ button:hover,
 
     #topArea {
         gap: 16px;
+        align-items: flex-start;
     }
 
+    #topButtons {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    #languageToggle,
     #UpdateHistory_button {
         flex-shrink: 0;
-        padding: 12px 16px;
+        padding: 12px 14px;
         font-size: 16px;
         border-width: 2px;
     }

@@ -18,6 +18,115 @@ const rotateRightButton = document.getElementById("rotateRight");
 const deleteButton = document.getElementById("deleteButton");
 const clearButton = document.getElementById("clearButton");
 const saveButton = document.getElementById("saveButton");
+const languageToggle = document.getElementById("languageToggle");
+
+const translations = {
+    ja: {
+        documentTitle: "推しポイント",
+        appTitle: "推しポイント",
+        updateHistory: "更新履歴",
+        chooseImage: "画像を選択",
+        saveImage: "画像を保存",
+        quickText: "ここ好き！",
+        addCustomText: "テキスト追加",
+        textSize: "文字サイズ",
+        textColor: "文字色",
+        arrowSize: "矢印サイズ",
+        arrowColor: "矢印色",
+        deleteSelection: "選択を削除",
+        clearAll: "全部削除",
+        addTextTitle: "テキストを追加",
+        textPlaceholder: "テキストを入力...",
+        add: "追加",
+        back: "戻る",
+        hint: "文字・矢印 移動：タップ / ドラッグ<br>矢印描画：少し長押しして ドラッグ<br>矢印回転：選択して ↶ ↷ で回転<br>",
+        selectImageFirst: "先に画像を選択してください",
+        languageToggleLabel: "言語を切り替え"
+    },
+    en: {
+        documentTitle: "LovePoints",
+        appTitle: "LovePoints",
+        updateHistory: "Updates",
+        chooseImage: "Choose Image",
+        saveImage: "Save Image",
+        quickText: "Love this!",
+        addCustomText: "Add Text",
+        textSize: "Text Size",
+        textColor: "Text Color",
+        arrowSize: "Arrow Size",
+        arrowColor: "Arrow Color",
+        deleteSelection: "Delete Selection",
+        clearAll: "Clear All",
+        addTextTitle: "Add Text",
+        textPlaceholder: "Enter text...",
+        add: "Add",
+        back: "Back",
+        hint: "Move text/arrows: tap / drag<br>Draw arrow: press briefly, then drag<br>Rotate arrow: select it, then use ↶ ↷<br>",
+        selectImageFirst: "Please choose an image first",
+        languageToggleLabel: "Switch language"
+    }
+};
+
+let currentLanguage =
+    localStorage.getItem("lovePointsLanguage") === "en"
+        ? "en"
+        : "ja";
+
+function t(key) {
+    return translations[currentLanguage][key];
+}
+
+function applyLanguage() {
+
+    const translation =
+        translations[currentLanguage];
+
+    document.documentElement.lang =
+        currentLanguage;
+
+    document.title =
+        translation.documentTitle;
+
+    document.querySelectorAll("[data-i18n]").forEach(function (element) {
+        element.childNodes[0].nodeValue =
+            translation[element.dataset.i18n];
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach(function (element) {
+        element.innerHTML =
+            translation[element.dataset.i18nHtml];
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (element) {
+        element.placeholder =
+            translation[element.dataset.i18nPlaceholder];
+    });
+
+    languageToggle.setAttribute(
+        "aria-label",
+        translation.languageToggleLabel
+    );
+
+    languageToggle.dataset.language =
+        currentLanguage;
+
+}
+
+languageToggle.addEventListener("pointerup", function () {
+
+    currentLanguage =
+        currentLanguage === "ja" ? "en" : "ja";
+
+    localStorage.setItem(
+        "lovePointsLanguage",
+        currentLanguage
+    );
+
+    applyLanguage();
+
+});
+
+applyLanguage();
 
 
 // ============================
@@ -99,7 +208,7 @@ imageInput.addEventListener("change", function () {
 
 addTextButton.addEventListener("pointerup", function () {
 
-    addText("ここ好き！");
+    addText(t("quickText"));
 
 });
 
@@ -109,7 +218,7 @@ addCustomTextButton.addEventListener("pointerup", function () {
 
     if (!image) {
 
-        alert("先に画像を選択してください");
+        alert(t("selectImageFirst"));
 
         return;
     }
@@ -158,7 +267,7 @@ function addText(textValue) {
 
     if (!image) {
 
-        alert("先に画像を選択してください");
+        alert(t("selectImageFirst"));
 
         return;
     }
@@ -1256,7 +1365,7 @@ saveButton.addEventListener("pointerup", function () {
 
     if (!image) {
 
-        alert("先に画像を選択してください");
+        alert(t("selectImageFirst"));
 
         return;
     }
@@ -1316,5 +1425,8 @@ window.addEventListener("resize", updateCanvasDisplaySize);
 const UpdateHistory_button = document.getElementById("UpdateHistory_button");
 UpdateHistory_button.addEventListener("pointerup", () =>{
 
-    window.open("UpdateHistory.html", "_blank");
+    window.open(
+        `UpdateHistory.html?lang=${currentLanguage}`,
+        "_blank"
+    );
 });
