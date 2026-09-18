@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <title>更新履歴</title>
 
-    <link rel="stylesheet" href="UpdateHistory.css?v=0.01">
+    <link rel="stylesheet" href="UpdateHistory.css?v=0.03">
 </head>
 <body>
     <h1 data-i18n="title">更新履歴</h1>
+
     <div id="update">
+
+        <div>
+            <h2>2026/9/18</h2>
+            <hr>
+            <p data-i18n-html="englishVersion">・英語版に対応<br>
+            </p>
+        </div>
 
         <div>
             <h2>2026/9/16</h2>
@@ -19,21 +27,25 @@
         </div>
         
     </div>
+
     <script>
         const translations = {
             ja: {
                 documentTitle: "更新履歴",
                 title: "更新履歴",
-                release: "・リリース<br>"
+                release: "・リリース<br>",
+                englishVersion: "・英語版に対応<br>"
             },
             en: {
                 documentTitle: "Update History",
                 title: "Update History",
-                release: "- Released<br>"
+                release: "- Released<br>",
+                englishVersion: "- Added English support<br>"
             }
         };
 
         const params = new URLSearchParams(window.location.search);
+
         const selectedLanguage =
             params.get("lang") === "en" ||
             localStorage.getItem("lovePointsLanguage") === "en"
