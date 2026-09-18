@@ -929,7 +929,7 @@ function deleteSelected() {
 
 
 deleteButton.addEventListener(
-    "click",
+    "pointerup",
     deleteSelected
 );
 
