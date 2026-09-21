@@ -1,755 +1,430 @@
 * {
-  box-sizing: border-box;
-  }
+    box-sizing: border-box;
+}
 
 html,
 body {
-touch-action: manipulation;
+    touch-action: manipulation;
+    
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 
-margin: 0;
-padding: 0;
-min-height: 100%;
+    background-color: #11121d;
+    color: white;
 
-background-color: #11121d;
-color: white;
+    font-family: sans-serif;
 
-font-family: sans-serif;
-
-background:
-    radial-gradient(
-        circle at 20% 30%,
-        rgba(80, 180, 255, .28) 0%,
-        rgba(80, 180, 255, .16) 24%,
-        rgba(80, 180, 255, .06) 44%,
-        rgba(80, 180, 255, 0) 68%
-    ),
-    radial-gradient(
-        circle at 80% 70%,
-        rgba(150, 80, 255, .24) 0%,
-        rgba(150, 80, 255, .14) 26%,
-        rgba(150, 80, 255, .05) 46%,
-        rgba(150, 80, 255, 0) 70%
-    ),
-    linear-gradient(
-        135deg,
-        #071526,
-        #171338
-    );
-
+    background:
+        radial-gradient(circle at 20% 30%,
+            rgba(80, 180, 255, .28) 0%,
+            rgba(80, 180, 255, .16) 24%,
+            rgba(80, 180, 255, .06) 44%,
+            rgba(80, 180, 255, 0) 68%),
+        radial-gradient(circle at 80% 70%,
+            rgba(150, 80, 255, .24) 0%,
+            rgba(150, 80, 255, .14) 26%,
+            rgba(150, 80, 255, .05) 46%,
+            rgba(150, 80, 255, 0) 70%),
+        linear-gradient(135deg, #071526, #171338);
 }
 
 body {
-padding: 20px;
-text-align: center;
+    padding: 20px;
+    text-align: center;
 }
 
 h1 {
-margin: 10px 0 20px;
+    margin: 10px 0 20px;
 }
 
 .toolbar {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 
+    gap: 10px;
 
-gap: 10px;
-
-margin-bottom: 10px;
-
-
+    margin-bottom: 10px;
 }
 
-.button {
-font-size: 15px;
-margin: 0 3px;
+.button
+{
+    font-size: 15px;
+    margin: 0 3px;
 
-
-transition: 0.3s;
-
-
+    transition: 0.3;
 }
 
 button,
 .imageButton {
-padding: 10px 15px;
+    padding: 10px 15px;
 
+    border: 1px solid #4ddfff;
+    border-radius: 8px;
 
-border: 1px solid #4ddfff;
-border-radius: 8px;
+    background-color: #1b1d2b;
+    color: white;
 
-background-color: #1b1d2b;
-color: white;
+    cursor: pointer;
 
-cursor: pointer;
-
-font-size: 14px;
-
-
+    font-size: 14px;
+    
 }
+
 
 button:hover,
 .imageButton:hover {
-background-color: #292c3e;
+    background-color: #292c3e;
 }
-
-/* =========================
-星モード
-========================= */
-
-#starModeButton {
-font-size: 18px;
-min-width: 50px;
-}
-
-#starModeButton.active {
-background-color: #f6f457;
-color: #11121d;
-
-
-border-color: #f6f457;
-
-box-shadow:
-    0 0 8px rgba(246, 244, 87, 0.6);
-
-}
-
-/* =========================
-保存・画像選択
-========================= */
 
 #saveButton,
 .imageButton,
 #saveButton:hover,
 .imageButton:hover {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-
-
-background-color: #4ddeffa3;
-
-color: white;
-
-font-size: 15px;
-line-height: 1.2;
-
-margin: 10px 0;
-
-min-height: 41px;
-
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4ddeffa3;
+    color: white;
+    font-size: 15px;
+    line-height: 1.2;
+    margin: 10px 0;
+    min-height: 41px;
 }
+
 
 #saveButton:active,
 .imageButton:active,
 .button:active {
-transform: scale(0.9);
+    
+    transform: scale(0.9);
 }
 
 .imageButton input {
-display: none;
+    display: none;
 }
-
-/* =========================
-ラベル
-========================= */
 
 .toolbar label:not(.imageButton) {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
-
-gap: 5px;
-
-font-size: 14px;
-
-
+    font-size: 14px;
 }
-
-/* =========================
-ヒント
-========================= */
 
 .hint {
-color: #aaa;
+    color: #aaa;
 
-font-size: 13px;
-line-height: 1.6;
-
+    font-size: 13px;
+    line-height: 1.6;
 }
 
+
 /* =========================
-Canvas
+   Canvas
 ========================= */
 
 #canvasArea {
-width: 100%;
+    width: 100%;
 
+    margin: 20px auto;
 
-margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-display: flex;
-justify-content: center;
-align-items: center;
-
-overflow: hidden;
-
-
+    overflow: hidden;
 }
 
 #canvas {
-display: block;
+    display: block;
+    
+    max-width: 100%;
+    max-height: calc(100vh - 250px);
 
+    width: auto;
+    height: auto;
 
-max-width: 100%;
-max-height: calc(100vh - 250px);
+    background-color: #222;
 
-width: auto;
-height: auto;
+    touch-action: pan-y pinch-zoom;
 
-background-color: #222;
-
-touch-action: pan-y pinch-zoom;
-
-cursor: crosshair;
-
-
+    cursor: crosshair;
 }
 
-/* =========================
-テキスト入力欄
-========================= */
 
+/* テキスト入力欄 */
 #overlay {
-display: none;
 
+    display: none;
 
-position: fixed;
+    position: fixed;
 
-top: 0;
-left: 0;
+    top: 0;
+    left: 0;
 
-width: 100%;
-height: 100%;
+    width: 100%;
+    height: 100%;
 
-background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
 
-z-index: 9998;
-
-
+    z-index: 999;
 }
+#inputUI
+{
 
-#inputUI {
-display: none;
+    display: none;
 
+    position: fixed;
 
-position: fixed;
+    flex-direction: column;
 
-flex-direction: column;
+    top: 50%;
+    left: 50%;
 
-top: 50%;
-left: 50%;
+    transform: translate(-50%, -50%);
 
-transform: translate(-50%, -50%);
+    width: 350px;
+    padding: 30px;
 
-width: 350px;
+    background: rgb(54, 54, 54);
 
-padding: 30px;
+    border-radius: 15px;
 
-background: rgb(54, 54, 54);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 
-border-radius: 15px;
+    z-index: 1000;
 
-box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4);
-
-z-index: 9999;
-
-background:
-    radial-gradient(
-        circle at 20% 30%,
-        rgba(80, 180, 255, .28) 0%,
-        rgba(80, 180, 255, .16) 24%,
-        rgba(80, 180, 255, .06) 44%,
-        rgba(80, 180, 255, 0) 68%
-    ),
-    radial-gradient(
-        circle at 80% 70%,
-        rgba(150, 80, 255, .24) 0%,
-        rgba(150, 80, 255, .14) 26%,
-        rgba(150, 80, 255, .05) 46%,
-        rgba(150, 80, 255, 0) 70%
-    ),
-    linear-gradient(
-        135deg,
-        #071526,
-        #171338
-    );
-
-
+    background:
+        radial-gradient(circle at 20% 30%,
+            rgba(80, 180, 255, .28) 0%,
+            rgba(80, 180, 255, .16) 24%,
+            rgba(80, 180, 255, .06) 44%,
+            rgba(80, 180, 255, 0) 68%),
+        radial-gradient(circle at 80% 70%,
+            rgba(150, 80, 255, .24) 0%,
+            rgba(150, 80, 255, .14) 26%,
+            rgba(150, 80, 255, .05) 46%,
+            rgba(150, 80, 255, 0) 70%),
+        linear-gradient(135deg, #071526, #171338);
 }
+#userText_area
+{
+    height: 50px;
+    font-size: 15px;
 
-#userText_area {
-height: 50px;
+    padding: 0 15px;
 
+    font-size: 15px;
 
-font-size: 15px;
+    border: 2px solid #aaa;
+    border-radius: 10px;
 
-padding: 0 15px;
+    background: white;
+    color: black;
 
-border: 2px solid #aaa;
-border-radius: 10px;
+    outline: none;
 
-background: white;
-color: black;
-
-outline: none;
-
-margin: 10px 0;
-
-
+    margin: 10px 0;
 }
-
-/* =========================
-上部
-========================= */
 
 #mainFunction {
-display: flex;
-
-justify-content: center;
-align-items: center;
-
-gap: 10px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 #topArea {
-display: flex;
-
-justify-content: space-between;
-align-items: center;
-
-gap: 12px;
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
 
 #topButtons {
-display: flex;
-
-align-items: center;
-
-gap: 8px;
-
-flex-shrink: 0;
-
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 #languageToggle {
-font-size: 15px;
+    font-size: 15px;
 }
 
 #languageToggle[data-language="ja"] [data-lang-label="ja"],
 #languageToggle[data-language="en"] [data-lang-label="en"] {
-color: #4ddfff;
-
-font-weight: bold;
-
+    color: #4ddfff;
+    font-weight: bold;
 }
 
 #languageToggle[data-language="ja"] [data-lang-label="en"],
 #languageToggle[data-language="en"] [data-lang-label="ja"],
 .languageDivider {
-color: #aaa;
+    color: #aaa;
 }
-
 #UpdateHistory_button {
-font-size: 15px;
+    font-size: 15px;
 }
 
 /* =========================
-スマホ
+   スマホ
 ========================= */
-
 @media (max-width: 600px) {
-
-
-body {
-    padding: 10px 12px 20px;
-}
-
-h1 {
-    margin: 8px 0 18px;
-
-    font-size: 20px;
-
-    line-height: 1.1;
-}
-
-/* =========================
-上部
-========================= */
-
-#overlay {
-    position: fixed;
-
-    top: -50px;
-    left: -30px;
-
-    width: calc(100vw + 60px);
-    height: calc(100vh + 80px);
-
-    background: rgba(0, 0, 0, 0.65);
-
-    z-index: 9998;
-}
-
-#inputUI {
-    z-index: 9999;
-}
-
-#topArea {
-    gap: 8px;
-
-    align-items: center;
-}
-
-#topArea h1 {
-    flex: 1;
-
-    min-width: 0;
-
-    text-align: left;
-}
-
-#topButtons {
-    flex-shrink: 0;
-
-    gap: 5px;
-}
-
-#languageToggle,
-#UpdateHistory_button {
-    flex-shrink: 0;
-
-    padding: 9px 10px;
-
-    font-size: 14px;
-
-    border-width: 1px;
-
-    border-radius: 8px;
-}
-
-/* =========================
-ツールバー
-========================= */
-
-.toolbar {
-    position: sticky;
-
-    top: 0;
-
-    z-index: 1000;
-
-    width: min(100%, 390px);
-
-    margin: 0 auto 14px;
-
-    padding: 14px 10px;
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    gap: 12px 8px;
-
-    background-color: rgba(25, 27, 42, 0.88);
-
-    backdrop-filter: blur(10px);
-
-    border-radius: 14px;
-
-    border: 1px solid rgba(77, 223, 255, 0.18);
-}
-
-.toolbar button,
-.toolbar .imageButton {
-    min-height: 42px;
-
-    padding: 8px 10px;
-
-    border-width: 1px;
-
-    border-radius: 10px;
-
-    font-size: 15px;
-}
-
-/* =========================
-メイン3ボタン
-========================= */
-
-#mainFunction {
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: stretch;
-
-    gap: 7px;
-
-    margin-bottom: 2px;
-}
-
-#mainFunction #addText,
-#mainFunction #addCustomText,
-#mainFunction #starModeButton {
-    flex: 1;
-
-    width: 0;
-
-    min-width: 0;
-
-    max-width: none;
-
-    margin: 0;
-
-    padding-left: 5px;
-    padding-right: 5px;
-
-    white-space: nowrap;
-}
-
-#mainFunction #starModeButton {
-    font-size: 18px;
-}
-
-/* =========================
-スライダー
-========================= */
-
-.toolbar label:not(.imageButton) {
-    justify-content: center;
-
-    gap: 7px;
-
-    font-size: 14px;
-
-    white-space: nowrap;
-}
-
-.toolbar label:has(input[type="range"]) {
-    width: 100%;
-
-    justify-content: center;
-}
-
-.toolbar input[type="range"] {
-    width: min(42vw, 170px);
-
-    max-width: 170px;
-}
-
-/* =========================
-色選択
-========================= */
-
-.toolbar label:has(input[type="color"]) {
-    width: calc(50% - 5px);
-
-    justify-content: center;
-}
-
-.toolbar input[type="color"] {
-    width: 32px;
-
-    height: 32px;
-
-    padding: 0;
-
-    border: 2px solid white;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-}
-
-.toolbar input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-.toolbar input[type="color"]::-webkit-color-swatch {
-    border: 0;
-
-    border-radius: 50%;
-}
-
-/* =========================
-その他のボタン
-========================= */
-
-.toolbar > div:not(#mainFunction):not(#overlay):not(#inputUI) {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    gap: 7px;
-
-    width: 100%;
-}
-
-.toolbar > div:not(#mainFunction):not(#overlay):not(#inputUI) button {
-    margin: 0;
-}
-
-/* 回転 */
-
-#rotateLeft,
-#rotateRight {
-    flex: 1;
-
-    min-width: 0;
-
-    max-width: 100px;
-}
-
-/* 削除 */
-
-#deleteButton,
-#clearButton {
-    flex: 1;
-
-    min-width: 0;
-
-    max-width: 130px;
-}
-
-/* =========================
-画像選択・保存
-========================= */
-
-#saveButton,
-.imageButton,
-#saveButton:hover,
-.imageButton:hover {
-    width: calc(50% - 4px);
-
-    min-height: 44px;
-
-    margin: 0;
-
-    font-size: 15px;
-}
-
-/* =========================
-Canvas
-========================= */
-
-#canvasArea {
-    width: 100%;
-
-    margin: 14px auto;
-
-    overflow: visible;
-}
-
-#canvas {
-    max-width: 100%;
-
-    max-height: calc(100vh - 330px);
-}
-
-/* =========================
-ヒント
-========================= */
-
-.hint {
-    margin-top: 10px;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-/* =========================
-テキスト入力
-========================= */
-
-#inputUI {
-    width: calc(100% - 30px);
-
-    max-width: 350px;
-
-    padding: 22px;
-}
-
-#userText_area {
-    height: 48px;
-
-    font-size: 16px;
-}
-
-}
-
-/* =========================
-小さいスマホ
-========================= */
-
-@media (max-width: 380px) {
-
-body {
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-h1 {
-    font-size: 18px;
-}
-
-#languageToggle,
-#UpdateHistory_button {
-    padding: 8px 8px;
-
-    font-size: 13px;
-}
-
-.toolbar {
-    padding: 12px 7px;
-
-    gap: 10px 6px;
-}
-
-.toolbar button,
-.toolbar .imageButton {
-    font-size: 14px;
-
-    padding-left: 7px;
-    padding-right: 7px;
-}
-
-#mainFunction {
-    gap: 5px;
-}
-
-#mainFunction #starModeButton {
-    font-size: 17px;
-}
-
-.toolbar input[type="range"] {
-    width: 38vw;
-}
-
-#canvas {
-    max-height: calc(100vh - 310px);
-}
+    body {
+        padding: 12px 18px 20px;
+    }
+
+    h1 {
+        margin: 8px 0 22px;
+        font-size: 20px;
+        line-height: 1.1;
+    }
+
+    /* #topArea {
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    #topButtons {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    } */
+
+    #topArea {
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    #topArea h1 {
+        flex: 1;
+        min-width: 0;
+    }
+
+    #topButtons {
+        flex-shrink: 1;
+    }
+
+    #languageToggle,
+    #UpdateHistory_button {
+        flex-shrink: 0;
+        padding: 12px 14px;
+        font-size: 16px;
+        border-width: 2px;
+    }
+
+    .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        width: min(100%, 360px);
+        margin: 0 auto 18px;
+        padding: 22px 10px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px 12px;
+
+        background-color: #313131a5;
+    }
+
+    .toolbar button,
+    .toolbar .imageButton {
+        min-height: 44px;
+        padding: 10px 14px;
+        border-width: 2px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    #addText,
+    #addCustomText {
+        width: min(42%, 150px);
+    }
+
+    .toolbar label:not(.imageButton) {
+        justify-content: center;
+        gap: 10px;
+        font-size: 16px;
+        white-space: nowrap;
+    }
+
+    .toolbar label:has(input[type="range"]) {
+        width: min(58%, 240px);
+    }
+
+    .toolbar label:has(input[type="color"]) {
+        width: auto;
+    }
+
+    .toolbar input[type="range"] {
+        width: min(34vw, 150px);
+        max-width: 130px;
+    }
+
+    .toolbar input[type="color"] {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border: 3px solid white;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .toolbar input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+
+    .toolbar input[type="color"]::-webkit-color-swatch {
+        border: 0;
+        border-radius: 50%;
+    }
+
+    .toolbar > div:not(#mainFunction):not(#overlay):not(#inputUI) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .toolbar > div:not(#mainFunction):not(#overlay):not(#inputUI) button {
+        margin: 0;
+    }
+
+    #rotateLeft,
+    #rotateRight {
+        min-width: 68px;
+    }
+
+    #deleteButton,
+    #clearButton {
+        min-width: 96px;
+    }
+
+    #mainFunction {
+        width: 100%;
+        gap: 14px;
+    }
+
+    #saveButton,
+    .imageButton,
+    #saveButton:hover,
+    .imageButton:hover {
+        width: min(42%, 150px);
+        min-height: 44px;
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .hint {
+        font-size: 16px;
+    }
 
 }

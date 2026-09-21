@@ -20,212 +20,114 @@ const clearButton = document.getElementById("clearButton");
 const saveButton = document.getElementById("saveButton");
 const languageToggle = document.getElementById("languageToggle");
 
-const starModeButton = document.getElementById("starModeButton");
-
-let isStarMode = false;
-
 const translations = {
-
-
-ja: {
-
-    documentTitle: "推しポイント",
-
-    appTitle: "推しポイント",
-
-    updateHistory: "更新履歴",
-
-    chooseImage: "画像を選択",
-
-    saveImage: "画像を保存",
-
-    quickText: "ここ好き！",
-
-    addCustomText: "テキスト追加",
-
-    textSize: "文字サイズ",
-
-    textColor: "文字色",
-
-    arrowSize: "矢印・星サイズ",
-
-    arrowColor: "矢印・星色",
-
-    deleteSelection: "選択を削除",
-
-    clearAll: "全部削除",
-
-    addTextTitle: "テキストを追加",
-
-    textPlaceholder: "テキストを入力...",
-
-    add: "追加",
-
-    back: "戻る",
-
-    hint:
-        "文字・矢印・星 移動：タップ / ドラッグ<br>" +
-        "矢印・星描画：少し長押しして ドラッグ<br>" +
-        "矢印回転：選択して ↶ ↷ で回転<br>",
-
-    selectImageFirst: "先に画像を選択してください",
-
-    languageToggleLabel: "言語を切り替え",
-
-    starModeOn: "星モード：ON",
-
-    starModeOff: "星モード：OFF"
-
-},
-
-
-en: {
-
-    documentTitle: "LovePoints",
-
-    appTitle: "LovePoints",
-
-    updateHistory: "Updates",
-
-    chooseImage: "Choose Image",
-
-    saveImage: "Save Image",
-
-    quickText: "Love this!",
-
-    addCustomText: "Add Text",
-
-    textSize: "Text Size",
-
-    textColor: "Text Color",
-
-    arrowSize: "Arrow / Star Size",
-
-    arrowColor: "Arrow / Star Color",
-
-    deleteSelection: "Delete Selection",
-
-    clearAll: "Clear All",
-
-    addTextTitle: "Add Text",
-
-    textPlaceholder: "Enter text...",
-
-    add: "Add",
-
-    back: "Back",
-
-    hint:
-        "Move text/arrows/stars: tap / drag<br>" +
-        "Draw arrow/star: press briefly, then drag<br>" +
-        "Rotate arrow: select it, then use ↶ ↷<br>",
-
-    selectImageFirst: "Please choose an image first",
-
-    languageToggleLabel: "Switch language",
-
-    starModeOn: "Star mode: ON",
-
-    starModeOff: "Star mode: OFF"
-
-}
-
-
+    ja: {
+        documentTitle: "推しポイント",
+        appTitle: "推しポイント",
+        updateHistory: "更新履歴",
+        chooseImage: "画像を選択",
+        saveImage: "画像を保存",
+        quickText: "ここ好き！",
+        addCustomText: "テキスト追加",
+        textSize: "文字サイズ",
+        textColor: "文字色",
+        arrowSize: "矢印サイズ",
+        arrowColor: "矢印色",
+        deleteSelection: "選択を削除",
+        clearAll: "全部削除",
+        addTextTitle: "テキストを追加",
+        textPlaceholder: "テキストを入力...",
+        add: "追加",
+        back: "戻る",
+        hint: "文字・矢印 移動：タップ / ドラッグ<br>矢印描画：少し長押しして ドラッグ<br>矢印回転：選択して ↶ ↷ で回転<br>",
+        selectImageFirst: "先に画像を選択してください",
+        languageToggleLabel: "言語を切り替え"
+    },
+    en: {
+        documentTitle: "LovePoints",
+        appTitle: "LovePoints",
+        updateHistory: "Updates",
+        chooseImage: "Choose Image",
+        saveImage: "Save Image",
+        quickText: "Love this!",
+        addCustomText: "Add Text",
+        textSize: "Text Size",
+        textColor: "Text Color",
+        arrowSize: "Arrow Size",
+        arrowColor: "Arrow Color",
+        deleteSelection: "Delete Selection",
+        clearAll: "Clear All",
+        addTextTitle: "Add Text",
+        textPlaceholder: "Enter text...",
+        add: "Add",
+        back: "Back",
+        hint: "Move text/arrows: tap / drag<br>Draw arrow: press briefly, then drag<br>Rotate arrow: select it, then use ↶ ↷<br>",
+        selectImageFirst: "Please choose an image first",
+        languageToggleLabel: "Switch language"
+    }
 };
 
 let currentLanguage =
-localStorage.getItem("lovePointsLanguage") === "en"
-? "en"
-: "ja";
+    localStorage.getItem("lovePointsLanguage") === "en"
+        ? "en"
+        : "ja";
 
 function t(key) {
-
-return translations[currentLanguage][key];
-
-
+    return translations[currentLanguage][key];
 }
 
 function applyLanguage() {
 
+    const translation =
+        translations[currentLanguage];
 
-const translation =
-    translations[currentLanguage];
+    document.documentElement.lang =
+        currentLanguage;
 
+    document.title =
+        translation.documentTitle;
 
-document.documentElement.lang =
-    currentLanguage;
+    document.querySelectorAll("[data-i18n]").forEach(function (element) {
+        element.childNodes[0].nodeValue =
+            translation[element.dataset.i18n];
+    });
 
+    document.querySelectorAll("[data-i18n-html]").forEach(function (element) {
+        element.innerHTML =
+            translation[element.dataset.i18nHtml];
+    });
 
-document.title =
-    translation.documentTitle;
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (element) {
+        element.placeholder =
+            translation[element.dataset.i18nPlaceholder];
+    });
 
+    languageToggle.setAttribute(
+        "aria-label",
+        translation.languageToggleLabel
+    );
 
-document.querySelectorAll("[data-i18n]").forEach(function (element) {
-
-    element.childNodes[0].nodeValue =
-        translation[element.dataset.i18n];
-
-});
-
-
-document.querySelectorAll("[data-i18n-html]").forEach(function (element) {
-
-    element.innerHTML =
-        translation[element.dataset.i18nHtml];
-
-});
-
-
-document.querySelectorAll("[data-i18n-placeholder]").forEach(function (element) {
-
-    element.placeholder =
-        translation[element.dataset.i18nPlaceholder];
-
-});
-
-
-languageToggle.setAttribute(
-    "aria-label",
-    translation.languageToggleLabel
-);
-
-
-languageToggle.dataset.language =
-    currentLanguage;
-
-
-starModeButton.setAttribute(
-    "aria-label",
-    isStarMode
-        ? translation.starModeOn
-        : translation.starModeOff
-);
-
+    languageToggle.dataset.language =
+        currentLanguage;
 
 }
 
 languageToggle.addEventListener("pointerup", function () {
 
+    currentLanguage =
+        currentLanguage === "ja" ? "en" : "ja";
 
-currentLanguage =
-    currentLanguage === "ja"
-        ? "en"
-        : "ja";
+    localStorage.setItem(
+        "lovePointsLanguage",
+        currentLanguage
+    );
 
-
-
-localStorage.setItem(
-    "lovePointsLanguage",
-    currentLanguage
-);
-
-
-applyLanguage();
-
+    applyLanguage();
 
 });
 
 applyLanguage();
+
 
 // ============================
 // データ
@@ -234,49 +136,29 @@ applyLanguage();
 let image = null;
 
 let texts = [];
-
 let arrows = [];
-
-let stars = [];
 
 let selectedObject = null;
 
-let currentTextColor =
-textColorInput.value || "#ffffff";
-
-let currentArrowColor =
-arrowColorInput.value || "#ff0000";
+let currentTextColor = textColorInput.value || "#ffffff";
+let currentArrowColor = arrowColorInput.value || "#ff0000";
 
 let draggingObject = null;
 
 let dragOffsetX = 0;
-
 let dragOffsetY = 0;
 
 let isDrawingArrow = false;
-
-let isDrawingStar = false;
-
 let pendingArrowTimer = null;
-
 let pendingArrowPointerId = null;
-
 let pendingArrowStartX = 0;
-
 let pendingArrowStartY = 0;
 
 let arrowStartX = 0;
-
 let arrowStartY = 0;
 
 let arrowEndX = 0;
-
 let arrowEndY = 0;
-
-let starPoints = [];
-
-
-
 
 
 // ============================
@@ -285,57 +167,40 @@ let starPoints = [];
 
 imageInput.addEventListener("change", function () {
 
+    const file = imageInput.files[0];
 
-const file = imageInput.files[0];
+    if (!file) {
+        return;
+    }
 
-if (!file) {
-    return;
-}
+    const reader = new FileReader();
 
+    reader.onload = function (event) {
 
-const reader = new FileReader();
+        image = new Image();
 
+        image.onload = function () {
 
-reader.onload = function (event) {
+            canvas.width = image.width;
+            canvas.height = image.height;
 
-    image = new Image();
+            updateCanvasDisplaySize();
 
+            texts = [];
+            arrows = [];
 
-    image.onload = function () {
+            selectedObject = null;
 
-        canvas.width = image.width;
+            draw();
+        };
 
-        canvas.height = image.height;
-
-
-        updateCanvasDisplaySize();
-
-
-        texts = [];
-
-        arrows = [];
-
-        stars = [];
-
-
-        selectedObject = null;
-
-
-        draw();
-
+        image.src = event.target.result;
     };
 
-
-    image.src =
-        event.target.result;
-
-};
-
-
-reader.readAsDataURL(file);
-
+    reader.readAsDataURL(file);
 
 });
+
 
 // ============================
 // テキスト追加
@@ -343,180 +208,94 @@ reader.readAsDataURL(file);
 
 addTextButton.addEventListener("pointerup", function () {
 
-
-addText(t("quickText"));
-
+    addText(t("quickText"));
 
 });
+
 
 addCustomTextButton.addEventListener("pointerup", function () {
 
 
-if (!image) {
+    if (!image) {
 
-    alert(t("selectImageFirst"));
+        alert(t("selectImageFirst"));
 
-    return;
-}
+        return;
+    }
 
+    const overlay = document.getElementById("overlay");
+    const inputUI = document.getElementById("inputUI");
 
-const overlay =
-    document.getElementById("overlay");
-
-const inputUI =
-    document.getElementById("inputUI");
-
-
-overlay.style.display =
-    "block";
-
-inputUI.style.display =
-    "flex";
-
+    overlay.style.display = "block";
+    inputUI.style.display = "flex";
 
 });
 
-// ============================
-// 星モード
-// ============================
+//テキスト追加
+const addText_button = document.getElementById("addText_button");
+addText_button.addEventListener("pointerup", () => {
+    
+    const overlay = document.getElementById("overlay");
+    const inputUI = document.getElementById("inputUI");
+    const userText_area = document.getElementById("userText_area");
 
-starModeButton.addEventListener("pointerup", function () {
-
-
-isStarMode =
-    !isStarMode;
-
-
-if (isStarMode) {
-
-    starModeButton.classList.add("active");
-
-}
-else {
-
-    starModeButton.classList.remove("active");
-
-}
-
-
-applyLanguage();
-
-
+    if(userText_area.value.trim().length === 0)
+    {
+        return;
+    }
+    addText(userText_area.value);
+    overlay.style.display = "none";
+    inputUI.style.display = "none";
+    userText_area.value = "";
 });
 
-// ============================
-// テキスト追加ダイアログ
-// ============================
+//ダイアログキャンセル
+const cansel_dialog = document.getElementById("cansel_dialog");
+cansel_dialog.addEventListener("pointerup", () => {
+    
+    const overlay = document.getElementById("overlay");
+    const inputUI = document.getElementById("inputUI");
+    const userText_area = document.getElementById("userText_area");
 
-const addText_button =
-document.getElementById("addText_button");
-
-addText_button.addEventListener("pointerup", function () {
-
-
-const overlay =
-    document.getElementById("overlay");
-
-const inputUI =
-    document.getElementById("inputUI");
-
-const userText_area =
-    document.getElementById("userText_area");
-
-
-if (userText_area.value.trim().length === 0) {
-
-    return;
-
-}
-
-
-addText(
-    userText_area.value
-);
-
-
-overlay.style.display =
-    "none";
-
-inputUI.style.display =
-    "none";
-
-
-userText_area.value =
-    "";
-
+    overlay.style.display = "none";
+    inputUI.style.display = "none";
+    userText_area.value = "";
 });
 
-// ============================
-// ダイアログキャンセル
-// ============================
-
-const cansel_dialog =
-document.getElementById("cansel_dialog");
-
-cansel_dialog.addEventListener("pointerup", function () {
-
-const overlay =
-    document.getElementById("overlay");
-
-const inputUI =
-    document.getElementById("inputUI");
-
-const userText_area =
-    document.getElementById("userText_area");
-
-
-overlay.style.display =
-    "none";
-
-inputUI.style.display =
-    "none";
-
-
-userText_area.value =
-    "";
-
-});
 
 function addText(textValue) {
 
-if (!image) {
+    if (!image) {
 
-    alert(t("selectImageFirst"));
+        alert(t("selectImageFirst"));
 
-    return;
-}
+        return;
+    }
 
+    const text = {
 
-const text = {
+        type: "text",
 
-    type: "text",
+        text: textValue,
 
-    text: textValue,
+        x: canvas.width / 2,
 
-    x: canvas.width / 2,
+        y: canvas.height / 2,
 
-    y: canvas.height / 2,
+        size: Number(textSizeSlider.value),
 
-    size:
-        Number(textSizeSlider.value),
+        color: currentTextColor
 
-    color:
-        currentTextColor
+    };
 
-};
+    texts.push(text);
 
+    selectedObject = text;
 
-texts.push(text);
-
-selectedObject =
-    text;
-
-
-draw();
+    draw();
 
 }
+
 
 // ============================
 // Canvas座標
@@ -524,115 +303,72 @@ draw();
 
 function updateCanvasDisplaySize() {
 
-if (!canvas.width || !canvas.height) {
-    return;
-}
+    if (!canvas.width || !canvas.height) {
+        return;
+    }
 
+    const isMobile =
+        window.matchMedia("(max-width: 600px)").matches;
 
-const isMobile =
-    window.matchMedia(
-        "(max-width: 600px)"
-    ).matches;
+    const minDisplayWidth =
+        isMobile ? 320 : 420;
 
+    const minDisplayHeight =
+        isMobile ? 220 : 300;
 
-const minDisplayWidth =
-    isMobile ? 320 : 420;
+    const areaWidth =
+        canvasArea.clientWidth || window.innerWidth;
 
-const minDisplayHeight =
-    isMobile ? 220 : 300;
+    const maxDisplayWidth =
+        Math.max(1, areaWidth);
 
+    const maxDisplayHeight =
+        Math.max(
+            isMobile ? 260 : 320,
+            window.innerHeight - 250
+        );
 
-const areaWidth =
-    canvasArea.clientWidth ||
-    window.innerWidth;
+    const minScale =
+        Math.max(
+            1,
+            minDisplayWidth / canvas.width,
+            minDisplayHeight / canvas.height
+        );
 
+    const maxScale =
+        Math.min(
+            maxDisplayWidth / canvas.width,
+            maxDisplayHeight / canvas.height
+        );
 
-const maxDisplayWidth =
-    Math.max(
-        1,
-        areaWidth
-    );
+    const displayScale =
+        Math.min(minScale, maxScale);
 
+    canvas.style.width =
+        `${Math.round(canvas.width * displayScale)}px`;
 
-const maxDisplayHeight =
-    Math.max(
-        isMobile ? 260 : 320,
-        window.innerHeight - 250
-    );
+    canvas.style.height =
+        `${Math.round(canvas.height * displayScale)}px`;
 
-
-const minScale =
-    Math.max(
-        1,
-
-        minDisplayWidth /
-            canvas.width,
-
-        minDisplayHeight /
-            canvas.height
-    );
-
-
-const maxScale =
-    Math.min(
-        maxDisplayWidth /
-            canvas.width,
-
-        maxDisplayHeight /
-            canvas.height
-    );
-
-
-const displayScale =
-    Math.min(
-        minScale,
-        maxScale
-    );
-
-
-canvas.style.width =
-    `${Math.round(
-        canvas.width *
-        displayScale
-    )}px`;
-
-
-canvas.style.height =
-    `${Math.round(
-        canvas.height *
-        displayScale
-    )}px`;
 }
 
 function getCanvasPosition(event) {
 
-const rect =
-    canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
 
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
 
-const scaleX =
-    canvas.width /
-    rect.width;
+    return {
 
+        x: (event.clientX - rect.left) * scaleX,
 
-const scaleY =
-    canvas.height /
-    rect.height;
+        y: (event.clientY - rect.top) * scaleY
 
-
-return {
-
-    x:
-        (event.clientX - rect.left) *
-        scaleX,
-
-    y:
-        (event.clientY - rect.top) *
-        scaleY
-
-};
+    };
 
 }
+
 
 // ============================
 // オブジェクト検索
@@ -640,519 +376,209 @@ return {
 
 function getObjectAt(x, y) {
 
-// テキスト
+    // テキスト
+    for (let i = texts.length - 1; i >= 0; i--) {
 
-for (
-    let i = texts.length - 1;
-    i >= 0;
-    i--
-) {
+        const text = texts[i];
 
-    const text =
-        texts[i];
+        ctx.font = `bold ${text.size}px sans-serif`;
 
+        const width = ctx.measureText(text.text).width;
 
-    ctx.font =
-        `bold ${text.size}px sans-serif`;
+        const height = text.size;
 
+        if (
+            x >= text.x - width / 2 &&
+            x <= text.x + width / 2 &&
+            y >= text.y - height &&
+            y <= text.y + 5
+        ) {
 
-    const width =
-        ctx.measureText(
-            text.text
-        ).width;
-
-
-    const height =
-        text.size;
-
-
-    if (
-        x >= text.x - width / 2 &&
-        x <= text.x + width / 2 &&
-        y >= text.y - height &&
-        y <= text.y + 5
-    ) {
-
-        return text;
-
+            return text;
+        }
     }
 
-}
 
+    // 矢印
+    for (let i = arrows.length - 1; i >= 0; i--) {
 
-// 星
+        const arrow = arrows[i];
 
-for (
-    let i = stars.length - 1;
-    i >= 0;
-    i--
-) {
-
-    const star =
-        stars[i];
-
-
-    if (
-        isNearStar(
+        if (isNearLine(
             x,
             y,
-            star
-        )
-    ) {
-
-        return star;
-
-    }
-
-}
-
-
-// 矢印
-
-for (
-    let i = arrows.length - 1;
-    i >= 0;
-    i--
-) {
-
-    const arrow =
-        arrows[i];
-
-
-    if (
-        isNearLine(
-            x,
-            y,
-
             arrow.startX,
             arrow.startY,
-
             arrow.endX,
             arrow.endY,
-
             arrow.size + 15
-        )
-    ) {
+        )) {
 
-        return arrow;
-
+            return arrow;
+        }
     }
 
+    return null;
 }
 
-
-return null;
-
-}
-
-// ============================
-// 星の近くか判定
-// ============================
-
-function isNearStar(x, y, star) {
-
-if (
-    !star.points ||
-    star.points.length < 2
-) {
-
-    return false;
-
-}
-
-
-for (
-    let i = 1;
-    i < star.points.length;
-    i++
-) {
-
-    const point1 =
-        star.points[i - 1];
-
-    const point2 =
-        star.points[i];
-
-
-    if (
-        isNearLine(
-            x,
-            y,
-
-            point1.x,
-            point1.y,
-
-            point2.x,
-            point2.y,
-
-            star.size + 15
-        )
-    ) {
-
-        return true;
-
-    }
-
-}
-
-
-return false;
-
-}
 
 // ============================
 // 線の近くか判定
 // ============================
 
 function isNearLine(
-px,
-py,
-x1,
-y1,
-x2,
-y2,
-tolerance
+    px,
+    py,
+    x1,
+    y1,
+    x2,
+    y2,
+    tolerance
 ) {
 
-const dx =
-    x2 - x1;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
 
-const dy =
-    y2 - y1;
+    const lengthSquared = dx * dx + dy * dy;
 
+    if (lengthSquared === 0) {
+        return false;
+    }
 
-const lengthSquared =
-    dx * dx +
-    dy * dy;
+    let t =
+        ((px - x1) * dx + (py - y1) * dy)
+        / lengthSquared;
 
+    t = Math.max(0, Math.min(1, t));
 
-if (lengthSquared === 0) {
-    return false;
-}
+    const closestX = x1 + t * dx;
+    const closestY = y1 + t * dy;
 
-
-let t =
-    (
-        (px - x1) * dx +
-        (py - y1) * dy
-    )
-    /
-    lengthSquared;
-
-
-t =
-    Math.max(
-        0,
-        Math.min(
-            1,
-            t
-        )
-    );
-
-
-const closestX =
-    x1 + t * dx;
-
-const closestY =
-    y1 + t * dy;
-
-
-const distance =
-    Math.hypot(
+    const distance = Math.hypot(
         px - closestX,
         py - closestY
     );
 
-
-return distance <= tolerance;
-
+    return distance <= tolerance;
 }
-
-// ============================
-// 長押しキャンセル
-// ============================
 
 function clearPendingArrow() {
 
-if (pendingArrowTimer) {
+    if (pendingArrowTimer) {
 
-    clearTimeout(
-        pendingArrowTimer
-    );
-
-    pendingArrowTimer =
-        null;
-
-}
-
-
-pendingArrowPointerId =
-    null;
-
-}
-
-// ============================
-// 矢印描画開始
-// ============================
-
-function startArrowDrawing(
-pos,
-pointerId
-) {
-
-isDrawingArrow =
-    true;
-
-
-selectedObject =
-    null;
-
-
-arrowStartX =
-    pos.x;
-
-arrowStartY =
-    pos.y;
-
-
-arrowEndX =
-    pos.x;
-
-arrowEndY =
-    pos.y;
-
-
-if (
-    pointerId !== undefined
-) {
-
-    try {
-
-        canvas.setPointerCapture(
-            pointerId
-        );
-
-    }
-    catch (error) {
-
-        // Pointer capture can fail.
+        clearTimeout(pendingArrowTimer);
+        pendingArrowTimer = null;
 
     }
 
-}
-
-
-draw();
+    pendingArrowPointerId = null;
 
 }
 
-// ============================
-// 星描画開始
-// ============================
 
-function startStarDrawing(
-pos,
-pointerId
-) {
+function startArrowDrawing(pos, pointerId) {
 
-isDrawingStar =
-    true;
+    isDrawingArrow = true;
 
+    selectedObject = null;
 
-selectedObject =
-    null;
+    arrowStartX = pos.x;
+    arrowStartY = pos.y;
 
+    arrowEndX = pos.x;
+    arrowEndY = pos.y;
 
-starPoints = [
+    if (pointerId !== undefined) {
 
-    {
-        x: pos.x,
-        y: pos.y
-    }
+        try {
 
-];
+            canvas.setPointerCapture(pointerId);
 
+        }
+        catch (error) {
 
-if (
-    pointerId !== undefined
-) {
+            // Pointer capture can fail if the browser has already turned the touch into a scroll.
 
-    try {
-
-        canvas.setPointerCapture(
-            pointerId
-        );
-
-    }
-    catch (error) {
-
-        // Pointer capture can fail.
+        }
 
     }
 
+    draw();
+
 }
 
-
-draw();
-}
 
 // ============================
 // pointerdown
 // ============================
 
-canvas.addEventListener(
-"pointerdown",
-function (event) {
+canvas.addEventListener("pointerdown", function (event) {
 
-    const pos =
-        getCanvasPosition(event);
+    const pos = getCanvasPosition(event);
 
-
-    const object =
-        getObjectAt(
-            pos.x,
-            pos.y
-        );
+    const object = getObjectAt(
+        pos.x,
+        pos.y
+    );
 
 
     // オブジェクトを選択
-
     if (object) {
 
-        if (
-            event.pointerType === "touch"
-        ) {
-
+        if (event.pointerType === "touch") {
             event.preventDefault();
-
         }
 
+        selectedObject = object;
 
-        selectedObject =
-            object;
+        draggingObject = object;
 
-
-        draggingObject =
-            object;
+        canvas.setPointerCapture(event.pointerId);
 
 
-        canvas.setPointerCapture(
-            event.pointerId
-        );
+        if (object.type === "text") {
 
-
-        if (
-            object.type === "text"
-        ) {
-
-            dragOffsetX =
-                pos.x -
-                object.x;
-
-            dragOffsetY =
-                pos.y -
-                object.y;
+            dragOffsetX = pos.x - object.x;
+            dragOffsetY = pos.y - object.y;
 
         }
-        else if (
-            object.type === "arrow"
-        ) {
+        else if (object.type === "arrow") {
 
-            dragOffsetX =
-                pos.x;
-
-            dragOffsetY =
-                pos.y;
+            dragOffsetX = pos.x;
+            dragOffsetY = pos.y;
 
         }
-        else if (
-            object.type === "star"
-        ) {
-
-            dragOffsetX =
-                pos.x;
-
-            dragOffsetY =
-                pos.y;
-
-        }
-
 
         draw();
 
         return;
-
     }
 
 
-    // スマホ
+    // スマホでは空白部分のドラッグをスクロールに譲り、長押しだけ矢印描画にする
+    if (event.pointerType === "touch") {
 
-    if (
-        event.pointerType === "touch"
-    ) {
+        selectedObject = null;
 
-        selectedObject =
-            null;
+        pendingArrowPointerId = event.pointerId;
+        pendingArrowStartX = pos.x;
+        pendingArrowStartY = pos.y;
 
+        pendingArrowTimer = setTimeout(function () {
 
-        pendingArrowPointerId =
-            event.pointerId;
+            pendingArrowTimer = null;
 
-
-        pendingArrowStartX =
-            pos.x;
-
-        pendingArrowStartY =
-            pos.y;
-
-
-        pendingArrowTimer =
-            setTimeout(
-                function () {
-
-                    pendingArrowTimer =
-                        null;
-
-
-                    if (isStarMode) {
-
-                        startStarDrawing(
-                            {
-                                x:
-                                    pendingArrowStartX,
-
-                                y:
-                                    pendingArrowStartY
-                            },
-
-                            pendingArrowPointerId
-                        );
-
-                    }
-                    else {
-
-                        startArrowDrawing(
-                            {
-                                x:
-                                    pendingArrowStartX,
-
-                                y:
-                                    pendingArrowStartY
-                            },
-
-                            pendingArrowPointerId
-                        );
-
-                    }
-
-
-                    pendingArrowPointerId =
-                        null;
-
+            startArrowDrawing(
+                {
+                    x: pendingArrowStartX,
+                    y: pendingArrowStartY
                 },
-                100
+                pendingArrowPointerId
             );
 
+            pendingArrowPointerId = null;
+
+        }, 100);
 
         draw();
 
@@ -1161,64 +587,31 @@ function (event) {
     }
 
 
-    // PC
+    // PCでは何もない場所のドラッグで矢印描画
+    startArrowDrawing(pos, event.pointerId);
 
-    if (isStarMode) {
+});
 
-        startStarDrawing(
-            pos,
-            event.pointerId
-        );
-
-    }
-    else {
-
-        startArrowDrawing(
-            pos,
-            event.pointerId
-        );
-
-    }
-
-}
-
-);
 
 // ============================
 // pointermove
 // ============================
 
-canvas.addEventListener(
-"pointermove",
-function (event) {
+canvas.addEventListener("pointermove", function (event) {
 
-    const pos =
-        getCanvasPosition(event);
+    const pos = getCanvasPosition(event);
 
 
-    // 長押し中
+    if (pendingArrowPointerId === event.pointerId) {
 
-    if (
-        pendingArrowPointerId ===
-        event.pointerId
-    ) {
-
-        const distance =
-            Math.hypot(
-                pos.x -
-                    pendingArrowStartX,
-
-                pos.y -
-                    pendingArrowStartY
-            );
-
+        const distance = Math.hypot(
+            pos.x - pendingArrowStartX,
+            pos.y - pendingArrowStartY
+        );
 
         if (distance > 8) {
-
             clearPendingArrow();
-
         }
-
 
         return;
 
@@ -1226,191 +619,83 @@ function (event) {
 
 
     // オブジェクト移動
-
     if (draggingObject) {
 
-        if (
-            draggingObject.type === "text"
-        ) {
+        if (draggingObject.type === "text") {
 
             draggingObject.x =
-                pos.x -
-                dragOffsetX;
+                pos.x - dragOffsetX;
 
             draggingObject.y =
-                pos.y -
-                dragOffsetY;
+                pos.y - dragOffsetY;
 
         }
-        else if (
-            draggingObject.type === "arrow"
-        ) {
+        else if (draggingObject.type === "arrow") {
 
             const moveX =
-                pos.x -
-                dragOffsetX;
+                pos.x - dragOffsetX;
 
             const moveY =
-                pos.y -
-                dragOffsetY;
+                pos.y - dragOffsetY;
 
+            draggingObject.startX += moveX;
+            draggingObject.startY += moveY;
 
-            draggingObject.startX +=
-                moveX;
+            draggingObject.endX += moveX;
+            draggingObject.endY += moveY;
 
-            draggingObject.startY +=
-                moveY;
-
-
-            draggingObject.endX +=
-                moveX;
-
-            draggingObject.endY +=
-                moveY;
-
-
-            dragOffsetX =
-                pos.x;
-
-            dragOffsetY =
-                pos.y;
+            dragOffsetX = pos.x;
+            dragOffsetY = pos.y;
 
         }
-        else if (
-            draggingObject.type === "star"
-        ) {
-
-            const moveX =
-                pos.x -
-                dragOffsetX;
-
-            const moveY =
-                pos.y -
-                dragOffsetY;
-
-
-            draggingObject.points.forEach(
-                function (point) {
-
-                    point.x += moveX;
-                    point.y += moveY;
-
-                }
-            );
-
-
-            dragOffsetX =
-                pos.x;
-
-            dragOffsetY =
-                pos.y;
-
-        }
-
 
         draw();
 
         return;
-
     }
 
 
     // 矢印描画
-
     if (isDrawingArrow) {
 
-        arrowEndX =
-            pos.x;
-
-        arrowEndY =
-            pos.y;
-
-
-        draw();
-
-        return;
-
-    }
-
-
-    // 星描画
-
-    if (isDrawingStar) {
-
-        const lastPoint =
-            starPoints[
-                starPoints.length - 1
-            ];
-
-
-        const distance =
-            Math.hypot(
-                pos.x - lastPoint.x,
-                pos.y - lastPoint.y
-            );
-
-
-        if (distance >= 5) {
-
-            starPoints.push(
-                {
-                    x: pos.x,
-                    y: pos.y
-                }
-            );
-
-        }
-
+        arrowEndX = pos.x;
+        arrowEndY = pos.y;
 
         draw();
 
     }
 
-}
+});
 
-);
 
 // ============================
 // pointerup
 // ============================
 
-canvas.addEventListener(
-"pointerup",
-function () {
+canvas.addEventListener("pointerup", function () {
 
     clearPendingArrow();
 
-
     // 移動終了
-
     if (draggingObject) {
 
-        draggingObject =
-            null;
+        draggingObject = null;
 
         draw();
 
         return;
-
     }
 
 
     // 矢印終了
-
     if (isDrawingArrow) {
 
-        isDrawingArrow =
-            false;
+        isDrawingArrow = false;
 
-
-        const distance =
-            Math.hypot(
-                arrowEndX -
-                    arrowStartX,
-
-                arrowEndY -
-                    arrowStartY
-            );
+        const distance = Math.hypot(
+            arrowEndX - arrowStartX,
+            arrowEndY - arrowStartY
+        );
 
 
         if (distance >= 10) {
@@ -1419,234 +704,95 @@ function () {
 
                 type: "arrow",
 
-                startX:
-                    arrowStartX,
+                startX: arrowStartX,
+                startY: arrowStartY,
 
-                startY:
-                    arrowStartY,
+                endX: arrowEndX,
+                endY: arrowEndY,
 
-                endX:
-                    arrowEndX,
+                size: Number(arrowSizeSlider.value),
 
-                endY:
-                    arrowEndY,
-
-                size:
-                    Number(
-                        arrowSizeSlider.value
-                    ),
-
-                color:
-                    currentArrowColor
+                color: currentArrowColor
 
             };
 
+            arrows.push(arrow);
 
-            arrows.push(
-                arrow
-            );
-
-
-            selectedObject =
-                arrow;
+            selectedObject = arrow;
 
         }
-
-
-        draw();
-
-        return;
-
-    }
-
-
-    // 星終了
-
-    if (isDrawingStar) {
-
-        isDrawingStar =
-            false;
-
-
-        if (
-            starPoints.length >= 2
-        ) {
-
-            const star = {
-
-                type: "star",
-
-                points:
-                    starPoints.map(
-                        function (point) {
-
-                            return {
-
-                                x: point.x,
-
-                                y: point.y
-
-                            };
-
-                        }
-                    ),
-
-                size:
-                    Number(
-                        arrowSizeSlider.value
-                    ),
-
-                color:
-                    currentArrowColor
-
-            };
-
-
-            stars.push(
-                star
-            );
-
-
-            selectedObject =
-                star;
-
-        }
-
-
-        starPoints =
-            [];
-
 
         draw();
 
     }
 
-}
+});
 
-);
 
-// ============================
-// pointercancel
-// ============================
-
-canvas.addEventListener(
-"pointercancel",
-function () {
+canvas.addEventListener("pointercancel", function () {
 
     clearPendingArrow();
 
-
-    draggingObject =
-        null;
-
-
-    isDrawingArrow =
-        false;
-
-
-    isDrawingStar =
-        false;
-
-
-    starPoints =
-        [];
-
+    draggingObject = null;
+    isDrawingArrow = false;
 
     draw();
 
-}
+});
 
-);
 
-canvas.addEventListener(
-"touchmove",
-function (event) {
+canvas.addEventListener("touchmove", function (event) {
 
-    if (
-        draggingObject ||
-        isDrawingArrow ||
-        isDrawingStar
-    ) {
-
+    if (draggingObject || isDrawingArrow) {
         event.preventDefault();
-
     }
 
-},
-{
-    passive: false
-}
+}, { passive: false });
 
-);
 
 // ============================
 // 文字サイズ
 // ============================
 
-textSizeSlider.addEventListener(
-"input",
-function () {
+textSizeSlider.addEventListener("input", function () {
 
     if (!selectedObject) {
         return;
     }
 
-
-    if (
-        selectedObject.type !==
-        "text"
-    ) {
-
+    if (selectedObject.type !== "text") {
         return;
-
     }
 
-
     selectedObject.size =
-        Number(
-            textSizeSlider.value
-        );
-
+        Number(textSizeSlider.value);
 
     draw();
 
-}
+});
 
-);
 
 // ============================
-// 矢印・星サイズ
+// 矢印サイズ
 // ============================
 
-arrowSizeSlider.addEventListener(
-"input",
-function () {
+arrowSizeSlider.addEventListener("input", function () {
 
     if (!selectedObject) {
         return;
     }
 
-
-    if (
-        selectedObject.type ===
-        "arrow" ||
-        selectedObject.type ===
-        "star"
-    ) {
-
-        selectedObject.size =
-            Number(
-                arrowSizeSlider.value
-            );
-
-
-        draw();
-
+    if (selectedObject.type !== "arrow") {
+        return;
     }
 
-}
+    selectedObject.size =
+        Number(arrowSizeSlider.value);
 
-);
+    draw();
+
+});
+
 
 // ============================
 // 矢印回転
@@ -1654,125 +800,87 @@ function () {
 
 function rotateArrow(degrees) {
 
-if (!selectedObject) {
-    return;
-}
+    if (!selectedObject) {
+        return;
+    }
+
+    if (selectedObject.type !== "arrow") {
+        return;
+    }
+
+    const arrow = selectedObject;
+
+    const centerX =
+        (arrow.startX + arrow.endX) / 2;
+
+    const centerY =
+        (arrow.startY + arrow.endY) / 2;
 
 
-if (
-    selectedObject.type !==
-    "arrow"
-) {
-
-    return;
-
-}
+    const radians =
+        degrees * Math.PI / 180;
 
 
-const arrow =
-    selectedObject;
+    function rotatePoint(x, y) {
+
+        const dx = x - centerX;
+        const dy = y - centerY;
+
+        return {
+
+            x:
+                centerX +
+                dx * Math.cos(radians) -
+                dy * Math.sin(radians),
+
+            y:
+                centerY +
+                dx * Math.sin(radians) +
+                dy * Math.cos(radians)
+
+        };
+
+    }
 
 
-const centerX =
-    (
-        arrow.startX +
-        arrow.endX
-    ) / 2;
+    const newStart =
+        rotatePoint(
+            arrow.startX,
+            arrow.startY
+        );
+
+    const newEnd =
+        rotatePoint(
+            arrow.endX,
+            arrow.endY
+        );
 
 
-const centerY =
-    (
-        arrow.startY +
-        arrow.endY
-    ) / 2;
+    arrow.startX = newStart.x;
+    arrow.startY = newStart.y;
+
+    arrow.endX = newEnd.x;
+    arrow.endY = newEnd.y;
 
 
-const radians =
-    degrees *
-    Math.PI /
-    180;
-
-
-function rotatePoint(
-    x,
-    y
-) {
-
-    const dx =
-        x - centerX;
-
-    const dy =
-        y - centerY;
-
-
-    return {
-
-        x:
-            centerX +
-            dx * Math.cos(radians) -
-            dy * Math.sin(radians),
-
-        y:
-            centerY +
-            dx * Math.sin(radians) +
-            dy * Math.cos(radians)
-
-    };
-
-}
-
-
-const newStart =
-    rotatePoint(
-        arrow.startX,
-        arrow.startY
-    );
-
-
-const newEnd =
-    rotatePoint(
-        arrow.endX,
-        arrow.endY
-    );
-
-
-arrow.startX =
-    newStart.x;
-
-arrow.startY =
-    newStart.y;
-
-
-arrow.endX =
-    newEnd.x;
-
-arrow.endY =
-    newEnd.y;
-
-
-draw();
+    draw();
 
 }
 
-rotateLeftButton.addEventListener(
-"pointerup",
-function () {
+
+rotateLeftButton.addEventListener("pointerup", function () {
 
     rotateArrow(-15);
 
-}
+});
 
-);
 
-rotateRightButton.addEventListener(
-"pointerup",
-function () {
+rotateRightButton.addEventListener("pointerup", function () {
 
     rotateArrow(15);
 
-}
+});
 
-);
 
 // ============================
 // 削除
@@ -1780,100 +888,57 @@ function () {
 
 function deleteSelected() {
 
-if (!selectedObject) {
-    return;
-}
+    if (!selectedObject) {
+        return;
+    }
 
 
-if (
-    selectedObject.type ===
-    "text"
-) {
+    if (selectedObject.type === "text") {
 
-    const index =
-        texts.indexOf(
-            selectedObject
-        );
+        const index =
+            texts.indexOf(selectedObject);
 
+        if (index !== -1) {
 
-    if (index !== -1) {
+            texts.splice(index, 1);
 
-        texts.splice(
-            index,
-            1
-        );
+        }
 
     }
 
-}
 
+    if (selectedObject.type === "arrow") {
 
-if (
-    selectedObject.type ===
-    "arrow"
-) {
+        const index =
+            arrows.indexOf(selectedObject);
 
-    const index =
-        arrows.indexOf(
-            selectedObject
-        );
+        if (index !== -1) {
 
+            arrows.splice(index, 1);
 
-    if (index !== -1) {
-
-        arrows.splice(
-            index,
-            1
-        );
+        }
 
     }
 
-}
 
+    selectedObject = null;
 
-if (
-    selectedObject.type ===
-    "star"
-) {
-
-    const index =
-        stars.indexOf(
-            selectedObject
-        );
-
-
-    if (index !== -1) {
-
-        stars.splice(
-            index,
-            1
-        );
-
-    }
+    draw();
 
 }
 
-
-selectedObject =
-    null;
-
-
-draw();
-
-}
 
 deleteButton.addEventListener(
-"pointerup",
-deleteSelected
+    "pointerup",
+    deleteSelected
 );
+
 
 // ============================
 // Deleteキー
 // ============================
 
-document.addEventListener(
-"keydown",
-function (event) {
+document.addEventListener("keydown", function (event) {
 
     if (
         event.key === "Delete" ||
@@ -1881,49 +946,35 @@ function (event) {
     ) {
 
         if (
-            document.activeElement.tagName ===
-                "INPUT" ||
-            document.activeElement.tagName ===
-                "TEXTAREA"
+            document.activeElement.tagName === "INPUT" ||
+            document.activeElement.tagName === "TEXTAREA"
         ) {
-
             return;
-
         }
-
 
         deleteSelected();
 
     }
 
-}
+});
 
-);
 
 // ============================
 // 全削除
 // ============================
 
-clearButton.addEventListener(
-"pointerup",
-function () {
+clearButton.addEventListener("pointerup", function () {
 
     texts = [];
 
     arrows = [];
 
-    stars = [];
-
-
-    selectedObject =
-        null;
-
+    selectedObject = null;
 
     draw();
 
-}
+});
 
-);
 
 // ============================
 // 描画
@@ -1931,802 +982,340 @@ function () {
 
 function draw() {
 
-ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-);
-
-
-// 画像
-
-if (image) {
-
-    ctx.drawImage(
-        image,
+    ctx.clearRect(
         0,
         0,
         canvas.width,
         canvas.height
     );
 
-}
+
+    // 画像
+    if (image) {
+
+        ctx.drawImage(
+            image,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+    }
 
 
-// 矢印
-
-arrows.forEach(
-    function (arrow) {
+    // 矢印
+    arrows.forEach(function (arrow) {
 
         drawArrow(
             arrow,
-            arrow ===
-                selectedObject
+            arrow === selectedObject
         );
 
-    }
-);
+    });
 
 
-// 星
+    // 描画中の矢印
+    if (isDrawingArrow) {
 
-stars.forEach(
-    function (star) {
-
-        drawStar(
-            star,
-            star ===
-                selectedObject
-        );
-
-    }
-);
-
-
-// 描画中の矢印
-
-if (isDrawingArrow) {
-
-    drawArrow(
-        {
+        drawArrow({
 
             type: "arrow",
 
-            startX:
-                arrowStartX,
+            startX: arrowStartX,
+            startY: arrowStartY,
 
-            startY:
-                arrowStartY,
+            endX: arrowEndX,
+            endY: arrowEndY,
 
-            endX:
-                arrowEndX,
+            size: Number(arrowSizeSlider.value),
 
-            endY:
-                arrowEndY,
+            color: currentArrowColor
 
-            size:
-                Number(
-                    arrowSizeSlider.value
-                ),
+        }, false);
 
-            color:
-                currentArrowColor
-
-        },
-        false
-    );
-
-}
+    }
 
 
-// 描画中の星
-
-if (
-    isDrawingStar &&
-    starPoints.length >= 2
-) {
-
-    drawStar(
-        {
-
-            type: "star",
-
-            points:
-                starPoints,
-
-            size:
-                Number(
-                    arrowSizeSlider.value
-                ),
-
-            color:
-                currentArrowColor
-
-        },
-        false
-    );
-
-}
-
-
-// テキスト
-
-texts.forEach(
-    function (text) {
+    // テキスト
+    texts.forEach(function (text) {
 
         drawText(
             text,
-            text ===
-                selectedObject
+            text === selectedObject
         );
 
-    }
-);
+    });
 
 }
+
 
 // ============================
 // テキスト描画
 // ============================
 
-function drawText(
-text,
-selected
-) {
+function drawText(text, selected) {
+
+    const color = text.color || currentTextColor || "#ffffff";
+
+    ctx.font =
+        `bold ${text.size}px sans-serif`;
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
 
 
-const color =
-    text.color ||
-    currentTextColor ||
-    "#ffffff";
+    // 選択枠
+    if (selected) {
+
+        const width =
+            ctx.measureText(text.text).width;
+
+        ctx.strokeStyle = "#4ddfff";
+
+        ctx.lineWidth = 3;
+
+        ctx.setLineDash([8, 5]);
+
+        ctx.strokeRect(
+
+            text.x - width / 2 - 8,
+
+            text.y - text.size - 8,
+
+            width + 16,
+
+            text.size + 16
+
+        );
+
+        ctx.setLineDash([]);
+
+    }
 
 
-ctx.font =
-    `bold ${text.size}px sans-serif`;
+    // 黒い縁取り
+    ctx.lineWidth = 8;
 
+    ctx.strokeStyle = "black";
 
-ctx.textAlign =
-    "center";
-
-ctx.textBaseline =
-    "bottom";
-
-
-// 選択枠
-
-if (selected) {
-
-    const width =
-        ctx.measureText(
-            text.text
-        ).width;
-
-
-    ctx.strokeStyle =
-        "#4ddfff";
-
-
-    ctx.lineWidth =
-        3;
-
-
-    ctx.setLineDash(
-        [8, 5]
+    ctx.strokeText(
+        text.text,
+        text.x,
+        text.y
     );
 
 
-    ctx.strokeRect(
+    // 文字
+    ctx.fillStyle = color;
 
-        text.x -
-            width / 2 -
-            8,
-
-        text.y -
-            text.size -
-            8,
-
-        width + 16,
-
-        text.size + 16
-
+    ctx.fillText(
+        text.text,
+        text.x,
+        text.y
     );
 
-
-    ctx.setLineDash([]);
-
 }
 
-
-// 黒い縁取り
-
-ctx.lineWidth =
-    8;
-
-
-ctx.strokeStyle =
-    "black";
-
-
-ctx.strokeText(
-    text.text,
-    text.x,
-    text.y
-);
-
-
-// 文字
-
-ctx.fillStyle =
-    color;
-
-
-ctx.fillText(
-    text.text,
-    text.x,
-    text.y
-);
-}
 
 // ============================
 // 矢印描画
 // ============================
 
-function drawArrow(
-arrow,
-selected
-) {
+function drawArrow(arrow, selected) {
 
-const color =
-    arrow.color ||
-    currentArrowColor ||
-    "#ff0000";
+    const color = arrow.color || currentArrowColor || "#ff0000";
 
+    const dx =
+        arrow.endX - arrow.startX;
 
-const dx =
-    arrow.endX -
-    arrow.startX;
+    const dy =
+        arrow.endY - arrow.startY;
+
+    const angle =
+        Math.atan2(dy, dx);
 
 
-const dy =
-    arrow.endY -
-    arrow.startY;
+    // 矢印の長さ
+    const length =
+        Math.hypot(dx, dy);
 
 
-const angle =
-    Math.atan2(
-        dy,
-        dx
-    );
+    // 矢印のサイズ
+    const size = arrow.size;
 
 
-const length =
-    Math.hypot(
-        dx,
-        dy
-    );
+    // 三角形の長さ
+    const headLength =
+        size * 3;
 
 
-const size =
-    arrow.size;
+    // 三角形の根元
+    const headBaseX =
+        arrow.endX -
+        headLength * Math.cos(angle);
+
+    const headBaseY =
+        arrow.endY -
+        headLength * Math.sin(angle);
 
 
-const headLength =
-    size * 3;
+    ctx.save();
 
 
-const headBaseX =
-    arrow.endX -
-    headLength *
-        Math.cos(angle);
+    // ========================
+    // 選択表示
+    // ========================
+
+    if (selected) {
+
+        ctx.strokeStyle = "#4ddfff";
+
+        ctx.lineWidth =
+            size + 8;
+
+        ctx.globalAlpha = 0.5;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            arrow.startX,
+            arrow.startY
+        );
+
+        ctx.lineTo(
+            headBaseX,
+            headBaseY
+        );
+
+        ctx.stroke();
+
+        ctx.globalAlpha = 1;
+
+    }
 
 
-const headBaseY =
-    arrow.endY -
-    headLength *
-        Math.sin(angle);
+    // ========================
+    // 棒
+    // ========================
 
+    ctx.strokeStyle = color;
 
-ctx.save();
+    ctx.lineWidth = size;
 
-
-// 選択表示
-
-if (selected) {
-
-    ctx.strokeStyle =
-        "#4ddfff";
-
-    ctx.lineWidth =
-        size + 8;
-
-    ctx.globalAlpha =
-        0.5;
-
+    ctx.lineCap = "round";
 
     ctx.beginPath();
-
 
     ctx.moveTo(
         arrow.startX,
         arrow.startY
     );
-
 
     ctx.lineTo(
         headBaseX,
         headBaseY
     );
 
-
     ctx.stroke();
 
 
-    ctx.globalAlpha =
-        1;
+    // ========================
+    // 三角形
+    // ========================
 
-}
+    ctx.fillStyle = color;
 
-
-// 棒
-
-ctx.strokeStyle =
-    color;
-
-ctx.lineWidth =
-    size;
-
-ctx.lineCap =
-    "round";
+    const sideLength =
+        headLength * 0.55;
 
 
-ctx.beginPath();
+    const leftX =
+        headBaseX -
+        sideLength *
+        Math.cos(angle - Math.PI / 2);
+
+    const leftY =
+        headBaseY -
+        sideLength *
+        Math.sin(angle - Math.PI / 2);
 
 
-ctx.moveTo(
-    arrow.startX,
-    arrow.startY
-);
+    const rightX =
+        headBaseX -
+        sideLength *
+        Math.cos(angle + Math.PI / 2);
 
-
-ctx.lineTo(
-    headBaseX,
-    headBaseY
-);
-
-
-ctx.stroke();
-
-
-// 三角形
-
-ctx.fillStyle =
-    color;
-
-
-const sideLength =
-    headLength * 0.55;
-
-
-const leftX =
-    headBaseX -
-    sideLength *
-        Math.cos(
-            angle -
-            Math.PI / 2
-        );
-
-
-const leftY =
-    headBaseY -
-    sideLength *
-        Math.sin(
-            angle -
-            Math.PI / 2
-        );
-
-
-const rightX =
-    headBaseX -
-    sideLength *
-        Math.cos(
-            angle +
-            Math.PI / 2
-        );
-
-
-const rightY =
-    headBaseY -
-    sideLength *
-        Math.sin(
-            angle +
-            Math.PI / 2
-        );
-
-
-ctx.beginPath();
-
-
-ctx.moveTo(
-    arrow.endX,
-    arrow.endY
-);
-
-
-ctx.lineTo(
-    leftX,
-    leftY
-);
-
-
-ctx.lineTo(
-    rightX,
-    rightY
-);
-
-
-ctx.closePath();
-
-
-ctx.fill();
-
-
-// 選択ハンドル
-
-if (selected) {
-
-    ctx.strokeStyle =
-        "#4ddfff";
-
-    ctx.fillStyle =
-        "white";
-
-    ctx.lineWidth =
-        4;
-
-    ctx.setLineDash(
-        [10, 7]
-    );
+    const rightY =
+        headBaseY -
+        sideLength *
+        Math.sin(angle + Math.PI / 2);
 
 
     ctx.beginPath();
 
-
     ctx.moveTo(
-        arrow.startX,
-        arrow.startY
-    );
-
-
-    ctx.lineTo(
         arrow.endX,
         arrow.endY
     );
 
-
-    ctx.stroke();
-
-
-    ctx.setLineDash([]);
-
-}
-
-
-ctx.restore();
-
-}
-
-// ============================
-// 星描画
-// ============================
-
-function drawStar(
-star,
-selected
-) {
-
-if (
-    !star.points ||
-    star.points.length < 2
-) {
-
-    return;
-
-}
-
-
-const color =
-    star.color ||
-    currentArrowColor ||
-    "#ff0000";
-
-
-ctx.save();
-
-
-/*
- * 星モードでは、なぞった場所に
- * 一定間隔で星を配置する
- */
-
-const spacing =
-    Math.max(
-        15,
-        star.size * 4
+    ctx.lineTo(
+        leftX,
+        leftY
     );
 
-
-let distanceFromLastStar =
-    Infinity;
-
-
-let previousPoint =
-    star.points[0];
-
-
-for (
-    let i = 1;
-    i < star.points.length;
-    i++
-) {
-
-    const currentPoint =
-        star.points[i];
-
-
-    const dx =
-        currentPoint.x -
-        previousPoint.x;
-
-    const dy =
-        currentPoint.y -
-        previousPoint.y;
-
-
-    const segmentLength =
-        Math.hypot(
-            dx,
-            dy
-        );
-
-
-    if (
-        segmentLength === 0
-    ) {
-
-        continue;
-
-    }
-
-
-    const angle =
-        Math.atan2(
-            dy,
-            dx
-        );
-
-
-    let travelled =
-        0;
-
-
-    while (
-        travelled <=
-        segmentLength
-    ) {
-
-        const x =
-            previousPoint.x +
-            Math.cos(angle) *
-                travelled;
-
-        const y =
-            previousPoint.y +
-            Math.sin(angle) *
-                travelled;
-
-
-        if (
-            distanceFromLastStar >=
-            spacing
-        ) {
-
-            drawSmallStar(
-                x,
-                y,
-                star.size,
-                color
-            );
-
-
-            distanceFromLastStar =
-                0;
-
-        }
-
-
-        const remaining =
-            segmentLength -
-            travelled;
-
-
-        const step =
-            Math.min(
-                spacing -
-                    distanceFromLastStar,
-
-                remaining
-            );
-
-
-        travelled +=
-            Math.max(
-                step,
-                0.1
-            );
-
-
-        distanceFromLastStar +=
-            step;
-
-    }
-
-
-    previousPoint =
-        currentPoint;
-
-}
-
-
-// 選択表示
-
-if (selected) {
-
-    ctx.strokeStyle =
-        "#4ddfff";
-
-    ctx.lineWidth =
-        star.size + 5;
-
-    ctx.globalAlpha =
-        0.35;
-
-    ctx.setLineDash(
-        [10, 7]
+    ctx.lineTo(
+        rightX,
+        rightY
     );
 
+    ctx.closePath();
 
-    ctx.beginPath();
-
-
-    ctx.moveTo(
-        star.points[0].x,
-        star.points[0].y
-    );
+    ctx.fill();
 
 
-    for (
-        let i = 1;
-        i < star.points.length;
-        i++
-    ) {
+    // ========================
+    // 選択ハンドル
+    // ========================
 
-        ctx.lineTo(
-            star.points[i].x,
-            star.points[i].y
-        );
+    if (selected) {
 
-    }
+        ctx.strokeStyle = "#4ddfff";
+        ctx.fillStyle = "white";
+        ctx.lineWidth = 4;
+        ctx.setLineDash([10, 7]);
 
-
-    ctx.stroke();
-
-
-    ctx.setLineDash([]);
-
-}
-
-
-ctx.restore();
-}
-
-// ============================
-// 小さい星
-// ============================
-
-function drawSmallStar(
-x,
-y,
-size,
-color
-) {
-
-const outerRadius =
-    Math.max(
-        3,
-        size * 1.6
-    );
-
-
-const innerRadius =
-    outerRadius * 0.42;
-
-
-ctx.fillStyle =
-    color;
-
-
-ctx.beginPath();
-
-
-for (
-    let i = 0;
-    i < 10;
-    i++
-) {
-
-    const angle =
-        -Math.PI / 2 +
-        i *
-            Math.PI /
-            5;
-
-
-    const radius =
-        i % 2 === 0
-            ? outerRadius
-            : innerRadius;
-
-
-    const px =
-        x +
-        Math.cos(angle) *
-            radius;
-
-
-    const py =
-        y +
-        Math.sin(angle) *
-            radius;
-
-
-    if (i === 0) {
+        ctx.beginPath();
 
         ctx.moveTo(
-            px,
-            py
+            arrow.startX,
+            arrow.startY
         );
-
-    }
-    else {
 
         ctx.lineTo(
-            px,
-            py
+            arrow.endX,
+            arrow.endY
         );
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
 
     }
 
-}
 
-
-ctx.closePath();
-
-ctx.fill();
-
+    ctx.restore();
 
 }
+
 
 // ============================
 // 色変更
 // ============================
 
-textColorInput.addEventListener(
-"input",
-function (e) {
+textColorInput.addEventListener("input", function (e) {
 
-    currentTextColor =
-        e.target.value;
+    currentTextColor = e.target.value;
 
 
     if (!selectedObject) {
@@ -2734,29 +1323,21 @@ function (e) {
     }
 
 
-    if (
-        selectedObject.type ===
-        "text"
-    ) {
+    // 選択中がテキストならテキストだけ変更
+    if (selectedObject.type === "text") {
 
-        selectedObject.color =
-            currentTextColor;
-
+        selectedObject.color = currentTextColor;
 
         draw();
 
     }
 
-}
+});
 
-);
 
-arrowColorInput.addEventListener(
-"input",
-function (e) {
+arrowColorInput.addEventListener("input", function (e) {
 
-    currentArrowColor =
-        e.target.value;
+    currentArrowColor = e.target.value;
 
 
     if (!selectedObject) {
@@ -2764,67 +1345,54 @@ function (e) {
     }
 
 
-    if (
-        selectedObject.type ===
-            "arrow" ||
-        selectedObject.type ===
-            "star"
-    ) {
+    // 選択中が矢印なら矢印だけ変更
+    if (selectedObject.type === "arrow") {
 
-        selectedObject.color =
-            currentArrowColor;
-
+        selectedObject.color = currentArrowColor;
 
         draw();
 
     }
 
-}
+});
 
-);
 
 // ============================
 // 保存
 // ============================
 
-saveButton.addEventListener(
-"pointerup",
-function () {
+saveButton.addEventListener("pointerup", function () {
 
     if (!image) {
 
-        alert(
-            t("selectImageFirst")
-        );
+        alert(t("selectImageFirst"));
 
         return;
-
     }
 
 
+    // 選択状態を一時的に解除
     const oldSelected =
         selectedObject;
 
-
-    selectedObject =
-        null;
-
+    selectedObject = null;
 
     draw();
 
 
+    // Canvasを画像データに変換
     const imageData =
-        canvas.toDataURL(
-            "image/png"
-        );
+        canvas.toDataURL("image/png");
 
 
+    // 保存ページへ渡す
     sessionStorage.setItem(
         "oshiKokoMiteImage",
         imageData
     );
 
 
+    // 元の選択状態に戻す
     selectedObject =
         oldSelected;
 
@@ -2832,50 +1400,33 @@ function () {
     draw();
 
 
+    // 保存ページへ移動
     window.location.href =
         "download.html";
 
-}
+});
 
-);
 
 // ============================
 // 初期Canvas
 // ============================
 
-canvas.width =
-800;
-
-canvas.height =
-500;
+canvas.width = 800;
+canvas.height = 500;
 
 updateCanvasDisplaySize();
 
 draw();
 
-window.addEventListener(
-"resize",
-updateCanvasDisplaySize
-);
+window.addEventListener("resize", updateCanvasDisplaySize);
 
-// ============================
-// 更新履歴
-// ============================
 
-const UpdateHistory_button =
-document.getElementById(
-"UpdateHistory_button"
-);
-
-UpdateHistory_button.addEventListener(
-"pointerup",
-function () {
+//更新履歴
+const UpdateHistory_button = document.getElementById("UpdateHistory_button");
+UpdateHistory_button.addEventListener("pointerup", () =>{
 
     window.open(
         `UpdateHistory.html?lang=${currentLanguage}`,
         "_blank"
     );
-
-}
-
-);
+});
